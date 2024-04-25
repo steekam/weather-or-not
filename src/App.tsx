@@ -1,31 +1,34 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {useGeolocation} from "./lib/hooks/use-geolocation";
 import {getWeatherInfo} from "./lib/api";
+import {useQuery} from "@tanstack/react-query";
 
 
 function App() {
-    const {loading, latitude, longitude} = useGeolocation({});
+    const {loading: waitingForLocation, latitude, longitude} = useGeolocation();
 
-    useEffect(() => {
-        if (loading || !(latitude && longitude)) {
-            return;
-        }
-
-        getWeatherInfo({lon: longitude, lat: latitude})
-            .then(res => {
-                console.log(res);
-            });
-
-    }, [loading, latitude, longitude]);
+    const {isLoading, data} = useQuery({
+        queryKey: ["weather", {latitude, longitude}] as const,
+        queryFn: ({queryKey}) => {
+            const {latitude, longitude} = queryKey[1];
+            return getWeatherInfo({lon: longitude!, lat: latitude!});
+        },
+        enabled: Boolean(!waitingForLocation && (latitude && longitude)),
+    });
 
     return (
 
         <div>
             <p>What is up my dude!</p>
-
-            {loading ? "Waiting for location..." :
-                <h2>Location: ${latitude} ${longitude}</h2>
+            {
+                (isLoading || waitingForLocation) ? "Loading..." : (<>
+                    <h2>Your weather data: </h2>
+                    <pre style={{padding: '10px', backgroundColor: "var(--gray-contrast)", color: "var(--gray-1)"}}>
+                        {JSON.stringify(data, null, 2)}
+                    </pre>
+                </>)
             }
+
         </div>
     );
 }
