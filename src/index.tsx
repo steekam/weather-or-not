@@ -4,6 +4,7 @@ import './styles/index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
+import {AppContextProvider} from "./lib/hooks/app-context";
 
 const queryClient = new QueryClient();
 
@@ -12,9 +13,11 @@ const root = ReactDOM.createRoot(
 );
 root.render(
     <React.StrictMode>
-        <QueryClientProvider client={queryClient}>
-            <App/>
-        </QueryClientProvider>
+        <AppContextProvider>
+            <QueryClientProvider client={queryClient}>
+                <App/>
+            </QueryClientProvider>
+        </AppContextProvider>
     </React.StrictMode>
 );
 
