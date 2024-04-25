@@ -1,19 +1,4 @@
-import axios from "axios";
-
-const axiosInstance = axios.create({
-    baseURL: "https://api.openweathermap.org/data/3.0/onecall",
-    headers: {
-        Accept: "application/json",
-    }
-});
-
-axiosInstance.interceptors.request.use(function (config) {
-    const url = new URL(config.baseURL!+`${config.url!}`);
-    url.searchParams.append("appid", process.env.REACT_APP_OPEN_WEATHER_MAP_KEY);
-    config.url = url.toString();
-
-    return config;
-});
+import {axiosInstance} from "./base";
 
 export const WeatherDataOptions = ["current", "minutely", "hourly", "daily", "alerts"] as const;
 export type WeatherDataOption = (typeof WeatherDataOptions)[number];
@@ -38,5 +23,5 @@ export async function getWeatherInfo(options: GetWeatherInfoOptions) {
     // @ts-expect-error Number types will be coerced to string
     const params = new URLSearchParams(options);
     params.append("units", "metric");
-    return axiosInstance.get(`?${params.toString()}`);
+    return axiosInstance.get(`/data/3.0/onecall?${params.toString()}`);
 }
