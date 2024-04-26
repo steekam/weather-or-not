@@ -110,7 +110,7 @@ function App() {
                             ? (<div className={"skeleton"}></div>)
                             : (
                                 <>
-                                    <h2>Weather for the day:</h2>
+                                    <h2>What&apos;s it like today?</h2>
                                     <p>{currentDerived?.summary}</p>
                                 </>
                             )
@@ -131,36 +131,34 @@ function App() {
                                     <div></div>
                                 </div>)
                                 : (
-                                    <>
-                                        <ScrollArea className="days-container-root">
-                                            <ul className={"days-container"}>
-                                                {
-                                                    // @ts-expect-error
-                                                    data.daily.slice(1).map((day) => {
-                                                        const currentDayDate = fromUnixTime(day.dt);
-                                                        return (
-                                                            <li className={"day-card"} key={day.dt}>
-                                                                <time dateTime={formatISO(currentDayDate)}
-                                                                      className={"day"}>{formatDate(currentDayDate, "iii")}</time>
-                                                                <div>
-                                                                    <img
-                                                                        src={`https://openweathermap.org/img/wn/${day.weather[0].icon}.png`}
-                                                                        alt={`Weather icon for ${day.weather[0].icon}`}/>
-                                                                </div>
-                                                                <p className={"summary"}>{day.weather[0].main}</p>
-                                                                <p className={"temps"}>
-                                                                    {~~day.temp.max}<sup>&deg;</sup>{" "}/{" "}
-                                                                    <span
-                                                                        className={"min"}>{~~day.temp.min}<sup>&deg;</sup></span>
-                                                                </p>
-                                                            </li>
-                                                        );
-                                                    })
-                                                }
-                                            </ul>
-                                            <ScrollBar orientation="horizontal" />
-                                        </ScrollArea>
-                                    </>
+                                    <ScrollArea className="days-container-root">
+                                        <ul className={"days-container"}>
+                                            {
+                                                // @ts-expect-error
+                                                data.daily.slice(1).map((day) => {
+                                                    const currentDayDate = fromUnixTime(day.dt);
+                                                    return (
+                                                        <li className={"day-card"} key={day.dt}>
+                                                            <time dateTime={formatISO(currentDayDate)}
+                                                                  className={"day"}>{formatDate(currentDayDate, "iii")}</time>
+                                                            <div>
+                                                                <img
+                                                                    src={`https://openweathermap.org/img/wn/${day.weather[0].icon}.png`}
+                                                                    alt={`Weather icon for ${day.weather[0].icon}`}/>
+                                                            </div>
+                                                            <p className={"summary"}>{day.weather[0].main}</p>
+                                                            <p className={"temps"}>
+                                                                {~~day.temp.max}<sup>&deg;</sup>{" "}/{" "}
+                                                                <span
+                                                                    className={"min"}>{~~day.temp.min}<sup>&deg;</sup></span>
+                                                            </p>
+                                                        </li>
+                                                    );
+                                                })
+                                            }
+                                        </ul>
+                                        <ScrollBar orientation="horizontal" />
+                                    </ScrollArea>
                                 )
                         }
 
