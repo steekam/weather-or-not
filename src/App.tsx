@@ -2,6 +2,7 @@ import React, {useMemo} from 'react';
 import {getWeatherInfo} from "./lib/api";
 import {useQuery} from "@tanstack/react-query";
 import {formatDate, formatISO, fromUnixTime} from "date-fns";
+import {ScrollArea, ScrollBar} from "~/components/scroll-area";
 
 
 function App() {
@@ -33,10 +34,11 @@ function App() {
             min: data.daily[0].temp.min,
             max: data.daily[0].temp.max,
             chanceOfRain: data.daily[0].pop * 100,
+            summary: data.daily[0].summary,
         };
     }, [data]);
 
-    const today = new Date;
+    const today = new Date();
 
     return (
         <main className={"wrapper"}>
@@ -80,7 +82,7 @@ function App() {
                                     <p className={"description"}>
                                         {data.current.weather[0].main}
                                         <span className={"temps"}>
-                                            {~~currentDerived?.min}<sup>&deg;C</sup> / {~~currentDerived?.max}<sup>&deg;C</sup>
+                                            {~~currentDerived?.max}<sup>&deg;C</sup> / {~~currentDerived?.min}<sup>&deg;C</sup>
                                         </span>
                                     </p>
 
@@ -99,7 +101,70 @@ function App() {
                 </section>
 
                 <section className={"detailed-section"}>
-                    Extra information
+                    <div>
+                        Language Switcher: English
+                    </div>
+
+                    <section className={"day-summary"}>
+                        {isLoading
+                            ? (<div className={"skeleton"}></div>)
+                            : (
+                                <>
+                                    <h2>Weather for the day:</h2>
+                                    <p>{currentDerived?.summary}</p>
+                                </>
+                            )
+                        }
+                    </section>
+
+                    <section className={"week-forecast"}>
+                        <h2 className={"title"}>7 day forecast</h2>
+
+                        {
+                            isLoading ?
+                                (<div className={"skeleton"}>
+                                    <div>Loading</div>
+                                    <div></div>
+                                    <div></div>
+                                    <div></div>
+                                    <div></div>
+                                    <div></div>
+                                </div>)
+                                : (
+                                    <>
+                                        <ScrollArea className="days-container-root">
+                                            <ul className={"days-container"}>
+                                                {
+                                                    // @ts-expect-error
+                                                    data.daily.slice(1).map((day) => {
+                                                        const currentDayDate = fromUnixTime(day.dt);
+                                                        return (
+                                                            <li className={"day-card"} key={day.dt}>
+                                                                <time dateTime={formatISO(currentDayDate)}
+                                                                      className={"day"}>{formatDate(currentDayDate, "iii")}</time>
+                                                                <div>
+                                                                    <img
+                                                                        src={`https://openweathermap.org/img/wn/${day.weather[0].icon}.png`}
+                                                                        alt={`Weather icon for ${day.weather[0].icon}`}/>
+                                                                </div>
+                                                                <p className={"summary"}>{day.weather[0].main}</p>
+                                                                <p className={"temps"}>
+                                                                    {~~day.temp.max}<sup>&deg;</sup>{" "}/{" "}
+                                                                    <span
+                                                                        className={"min"}>{~~day.temp.min}<sup>&deg;</sup></span>
+                                                                </p>
+                                                            </li>
+                                                        );
+                                                    })
+                                                }
+                                            </ul>
+                                            <ScrollBar orientation="horizontal" />
+                                        </ScrollArea>
+                                    </>
+                                )
+                        }
+
+                    </section>
                 </section>
             </div>
         </main>

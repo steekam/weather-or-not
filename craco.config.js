@@ -1,7 +1,6 @@
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const lightningcss = require('lightningcss');
 const browserslist = require('browserslist');
-const {TsconfigPathsPlugin} = require("tsconfig-paths-webpack-plugin");
 const path = require("node:path");
 
 /** @type {import('@craco/types').CracoConfig}  */
