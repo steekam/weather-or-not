@@ -2,6 +2,8 @@
 @import '@radix-ui/colors/gray-alpha.css';
 @import '@radix-ui/colors/gray-dark.css';
 @import '@radix-ui/colors/gray-dark-alpha.css';
+@import '@radix-ui/colors/blue.css';
+@import '@radix-ui/colors/blue-dark.css';
 
 :root, .light, .light-theme {
     /* Accent Scale */
