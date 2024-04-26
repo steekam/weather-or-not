@@ -7,3 +7,31 @@
     --fs-xxl: clamp(2.44rem, 2.38vi + 1.85rem, 3.75rem);
     --fs-xxxl: clamp(3.05rem, 3.54vi + 2.17rem, 5rem);
 }
+
+.fs-sm {
+    font-size: var(--fs-sm);
+}
+
+.fs-base {
+    font-size: var(--fs-base);
+}
+
+.fs-md {
+    font-size: var(--fs-md);
+}
+
+.fs-lg {
+    font-size: var(--fs-lg);
+}
+
+.fs-xl {
+    font-size: var(--fs-xl);
+}
+
+.fs-xxl {
+    font-size: var(--fs-xxl);
+}
+
+.fs-xxxl {
+    font-size: var(--fs-xxxl);
+}
