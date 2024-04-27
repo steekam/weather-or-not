@@ -3,7 +3,13 @@ import {getWeatherInfo} from "./lib/api";
 import {useQuery} from "@tanstack/react-query";
 import {formatDate, formatISO, fromUnixTime} from "date-fns";
 import {ScrollArea, ScrollBar} from "~/components/scroll-area";
-import {degreesToCompassDirection} from "~/lib/utlis";
+import {
+    degreesToCompassDirection,
+    getAirPressureComment,
+    getHumidityComment,
+    getVisibilityComment,
+    uviValueComment
+} from "~/lib/utlis";
 
 
 function App() {
@@ -188,7 +194,7 @@ function App() {
                                                 {data.current.uvi}
                                             </div>
                                             <p className={"comment"}>
-                                                You can get out your glasses
+                                                {uviValueComment(data.current.uvi)}
                                             </p>
                                         </div>
 
@@ -231,7 +237,7 @@ function App() {
                                                 <span className={"metric-value"}>{data.current.humidity}%</span>
                                             </div>
                                             <p className={"comment"}>
-                                                It's okay outside
+                                                {getHumidityComment(data.current.humidity)}
                                             </p>
                                         </div>
 
@@ -242,7 +248,7 @@ function App() {
                                                 className={"metric-unit"}>km</small>
                                             </div>
                                             <p className={"comment"}>
-                                                Great
+                                                {getVisibilityComment(data.current.visibility)}
                                             </p>
                                         </div>
 
@@ -253,7 +259,7 @@ function App() {
                                                 className={"metric-unit"}>hPa</small>
                                             </div>
                                             <p className={"comment"}>
-                                                Average
+                                                {getAirPressureComment(data.current.pressure)}
                                             </p>
                                         </div>
                                     </div>

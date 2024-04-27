@@ -72,10 +72,11 @@ main.wrapper {
         margin-inline: auto;
         border-radius: var(--rounded-xl);
         box-shadow: var(--shadow);
+        overflow: clip;
 
         .current-section {
             width: 33.33%;
-            max-width: 280px;
+            max-width: 300px;
             display: flex;
             flex-direction: column;
             padding-block: 2.75rem 1.75rem;
@@ -173,7 +174,7 @@ main.wrapper {
         .detailed-section {
             flex: 1 1 0;
             padding-inline: 1.75rem;
-            padding-block: 2rem;
+            padding-block: 2rem 1.75rem;
             background-color: var(--gray-2);
             width: 100%;
 
@@ -262,7 +263,8 @@ main.wrapper {
             }
 
             section.highlights {
-                margin-top: 1.5rem;
+                margin-top: 1.125rem;
+                width: 100%;
 
                 .skeleton {
                     margin-top: .75rem;
@@ -283,7 +285,7 @@ main.wrapper {
                 .highlights-container {
                     margin-top: .75rem;
                     display: grid;
-                    grid-template-columns: repeat(3, minmax(200px, 1fr));
+                    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
                     gap: 1.25rem;
 
                     .card {
