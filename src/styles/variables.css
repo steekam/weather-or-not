@@ -1,4 +1,17 @@
 :root {
+    /* Spacing sizes (for mostly max widths) */
+    --size-xs: 20rem; /* 320px */
+    --size-sm: 24rem; /* 384px */
+    --size-md: 28rem; /* 448px */
+    --size-lg: 32rem; /* 512px */
+    --size-xl: 36rem; /* 576px */
+    --size-2xl: 42rem; /* 672px */
+    --size-3xl: 48rem; /* 768px */
+    --size-4xl: 56rem; /* 896px */
+    --size-5xl: 64rem; /* 1024px */
+    --size-6xl: 72rem; /* 1152px */
+    --size-7xl: 80rem; /* 1280px */
+
     /*Border radius scale */
     --rounded-sm: 0.125rem; /* 2px */
     --rounded: 0.25rem; /* 4px */

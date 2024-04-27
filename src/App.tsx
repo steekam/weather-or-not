@@ -19,7 +19,8 @@ function App() {
             return res.data;
         },
         enabled: Boolean(!waitingForLocation && (latitude && longitude)),
-        staleTime: 10 * 60 * 1000,
+        staleTime: 30 * 60 * 1000,
+        refetchOnWindowFocus: false,
     });
 
     if (data) {
@@ -86,14 +87,15 @@ function App() {
                                             {~~currentDerived?.max}<sup>&deg;C</sup> / {~~currentDerived?.min}<sup>&deg;C</sup>
                                         </span>
                                     </p>
-
                                 </div>
-                                <p className={"last-updated-at"}>
-                                    Last updated:
-                                    <time dateTime={formatISO(fromUnixTime(data.current.dt))}>
-                                        {formatDate(fromUnixTime(data.current.dt), "do MMM, yyyy HH:mm")}
-                                    </time>
-                                </p>
+                                <div className={"last-updated-at"}>
+                                    <p>
+                                        Last updated:
+                                        <time dateTime={formatISO(fromUnixTime(data.current.dt))}>
+                                            {formatDate(fromUnixTime(data.current.dt), "do MMM, yyyy HH:mm")}
+                                        </time>
+                                    </p>
+                                </div>
                             </>
                         )
 
@@ -101,7 +103,8 @@ function App() {
 
                 </section>
 
-                <section className={"detailed-section"}>
+                <ScrollArea className={"detailed-section"}>
+                    <ScrollBar orientation="horizontal" />
                     <div>
                         Language Switcher: English
                     </div>
@@ -111,7 +114,7 @@ function App() {
                             ? (<div className={"skeleton"}></div>)
                             : (
                                 <>
-                                    <h2>The Day&apos;Vibe</h2>
+                                    <h2>The Day&apos;s Vibe</h2>
                                     <p>{currentDerived?.summary}</p>
                                 </>
                             )
@@ -258,7 +261,7 @@ function App() {
                         }
 
                     </section>
-                </section>
+                </ScrollArea>
             </div>
         </main>
     );
