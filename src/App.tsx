@@ -6,9 +6,12 @@ import {useOneCallQuery} from "~/lib/api/queries";
 import CurrentWeather from "~/components/current-weather";
 import WeekForecast from "~/components/week-forecast";
 import WeatherHighlights from "~/components/weather-highlights";
+import {Trans, useTranslation} from "react-i18next";
 
 
 function App() {
+    const {t} = useTranslation();
+
     const {locale, updateLocale} = useContext(AppContext);
 
     // Default Nairobi geo codes
@@ -35,10 +38,12 @@ function App() {
                                       d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z"/>
                             </svg>
 
-                            Something went wrong 😕
+                            {t('error.title', {defaultValue: "Something went wrong 😕"})}
+
                         </h2>
-                        <p>We cannot handle your request right now. There seems to be an issue with our service. Check in
-                            again later.
+                        <p> {t('error.generic', {
+                            defaultValue: "We cannot handle your request right now. There seems to be an issue with our service. Check in again later."
+                        })}
                         </p>
                     </div>
                 )
@@ -48,7 +53,7 @@ function App() {
                 <section className={"current-section"}>
                     <div>
                         <div style={{position: "relative"}}>
-                            <label className="sr-only" htmlFor="language-swithcer">Switch language</label>
+                            <label className="sr-only" htmlFor="language-swithcer">{t("Switch Language")}</label>
                             <select id="language-switcher" value={locale} onChange={e => updateLocale(e.target.value)}>
                                 <option value="en">English</option>
                                 <option value="sw">Swahili</option>
@@ -84,7 +89,7 @@ function App() {
                             ? (<div className={"skeleton"}></div>)
                             : (
                                 <>
-                                    <h2>The Day&apos;s Vibe</h2>
+                                    <h2>{t('day-summary.title')}</h2>
                                     <p>{data.daily[0].summary}</p>
                                 </>
                             )

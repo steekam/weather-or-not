@@ -1,10 +1,11 @@
-import React from 'react';
+import React, {Suspense} from 'react';
 import ReactDOM from 'react-dom/client';
 import './styles/index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
 import {AppContextProvider} from "./lib/hooks/app-context";
+import './lib/ii8n';
 
 const queryClient = new QueryClient();
 
@@ -15,7 +16,9 @@ root.render(
     <React.StrictMode>
         <AppContextProvider>
             <QueryClientProvider client={queryClient}>
-                <App/>
+                <Suspense fallback={<p>Loading...</p>}>
+                    <App/>
+                </Suspense>
             </QueryClientProvider>
         </AppContextProvider>
     </React.StrictMode>

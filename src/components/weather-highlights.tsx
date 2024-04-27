@@ -8,6 +8,7 @@ import {
 import {formatDate, fromUnixTime} from "date-fns";
 import React from "react";
 import {OneCallResponseSchema} from "~/lib/api/schemas";
+import {useTranslation} from "react-i18next";
 
 export interface WeatherHighlightsProps {
     isDataLoading: boolean;
@@ -15,8 +16,10 @@ export interface WeatherHighlightsProps {
 }
 
 export default function WeatherHighlights({isDataLoading, data}: WeatherHighlightsProps) {
+    const {t} = useTranslation();
+
     return <section className="section highlights">
-        <h2 className={"title"}>Highlight Reel</h2>
+        <h2 className={"title"}>{t('highlights.title')}</h2>
 
         {
             (isDataLoading || !data) ?
@@ -31,7 +34,7 @@ export default function WeatherHighlights({isDataLoading, data}: WeatherHighligh
                 : (
                     <div className={"highlights-container"}>
                         <div className="card">
-                            <p className={"card-title"}>UV Index</p>
+                            <p className={"card-title"}>{t('highlights.card-title.uv', {defaultValue: "UV Index"})}</p>
                             <div className={"card-content fs-xl"}>
                                 {data.current.uvi}
                             </div>
@@ -41,7 +44,7 @@ export default function WeatherHighlights({isDataLoading, data}: WeatherHighligh
                         </div>
 
                         <div className="card wind-status">
-                            <p className={"card-title"}>Wind Status</p>
+                            <p className={"card-title"}>{t('highlights.card-title.wind', {defaultValue: "Wind Status"})}</p>
                             <div className="card-content">
                                 <span className={"metric-value"}>{data.current.wind_speed}</span> <small
                                 className={"metric-unit"}>metre/sec</small>
@@ -61,7 +64,7 @@ export default function WeatherHighlights({isDataLoading, data}: WeatherHighligh
                         </div>
 
                         <div className="card sunrise-sunset">
-                            <p className={"card-title"}>Sunrise & Sunset</p>
+                            <p className={"card-title"}>{t('highlights.card-title.sunrise', {defaultValue: "Sunrise & Sunset"})}</p>
                             <div className={"card-content"}>
                                 <div>
                                     <span>🌅</span>
@@ -75,7 +78,7 @@ export default function WeatherHighlights({isDataLoading, data}: WeatherHighligh
                         </div>
 
                         <div className="card">
-                            <p className={"card-title"}>Humidity</p>
+                            <p className={"card-title"}>{t('highlights.card-title.humidity', {defaultValue: "Humidity"})}</p>
                             <div className={"card-content"}>
                                 <span className={"metric-value"}>{data.current.humidity}%</span>
                             </div>
@@ -85,7 +88,7 @@ export default function WeatherHighlights({isDataLoading, data}: WeatherHighligh
                         </div>
 
                         <div className="card">
-                            <p className={"card-title"}>Visibility</p>
+                            <p className={"card-title"}>{t('highlights.card-title.visibility', {defaultValue: "Visibility"})}</p>
                             <div className={"card-content"}>
                                 <span className={"metric-value"}>{data.current.visibility / 1000}</span>
                                 <small
@@ -97,7 +100,7 @@ export default function WeatherHighlights({isDataLoading, data}: WeatherHighligh
                         </div>
 
                         <div className="card">
-                            <p className={"card-title"}>Pressure</p>
+                            <p className={"card-title"}>{t('highlights.card-title.pressure', {defaultValue: "Air Pressure"})}</p>
                             <div className={"card-content"}>
                                 <span className={"metric-value"}>{data.current.pressure}</span> <small
                                 className={"metric-unit"}>hPa</small>

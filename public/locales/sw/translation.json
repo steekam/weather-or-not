@@ -1,0 +1,77 @@
+{
+  "Switch Language": "Badilisha lugha",
+  "day-summary": {
+    "title": "Vile siku itakuwa"
+  },
+  "date-time": "{{value, datetime}}",
+  "week-forecast": {
+    "title": "Utabiri wa siku 7"
+  },
+  "highlights": {
+    "title": "Vivutio Kadhaa",
+    "card-title": {
+      "uv": "Kiashiria cha UV",
+      "wind": "Hali ya Upepo",
+      "sunrise": "Macheo & Machweo",
+      "humidity": "Unyevu",
+      "visibility": "Mwonekano",
+      "pressure": "Shinikizo la Hewa"
+    },
+    "comments": {
+      "uvi": {
+        "veryLow": "👍🏾 Salama sana nje",
+        "low": "🕶️ Kuna joto kidogo nje",
+        "hot": "🔥Vaa SPF 50+",
+        "veryHot": "🤒️Linda ngozi yako!",
+        "extreme": "🚫 Usitoke nje"
+      },
+      "humidity": {
+        "low": "Kumekauka sana",
+        "medium": "Unyevu iko sawa tu",
+        "average": "Kwa weza nyesha",
+        "wet": "Unyevu kama kinyaka"
+      },
+      "visibility": {
+        "low": "Chukua tahadhari zaidi!",
+        "medium": "Endesha kwa uangalifu!",
+        "average": "Kaa macho!",
+        "great": "Furahia maoni yaliyo wazi!"
+      },
+      "pressure": {
+        "low": "🌧️ Chini",
+        "moderate": "⛅ Afadhali",
+        "high": "☀️ Juu",
+        "veryHigh": "🌞 Juu Sana"
+      }
+    }
+  },
+  "error": {
+    "title": "Kitu mbaya imefanyika 😕",
+    "generic": "Hatuwezi kushughulikia ombi lako kwa sasa. Inaonekana kuna tatizo na huduma yetu. Ingia tena baadaye."
+  },
+  "Last updated": "Ilisasishwa mwisho",
+  "compass": {
+    "North": "Kaskazini",
+    "NNE": "Kaskazini Mashariki Kaskazini",
+    "NE": "Kaskazini Mashariki",
+    "ENE": "Mashariki Kaskazini Mashariki",
+    "East": "Mashariki",
+    "ESE": "Mashariki Kusini Mashariki",
+    "SE": "Kusini Mashariki",
+    "SSE": "Kusini Kusini Mashariki",
+    "South": "Kusini",
+    "SSW": "Kusini Kusini Magharibi",
+    "SW": "Kusini Magharibi",
+    "WSW": "Magharibi Kusini Magharibi",
+    "West": "Magharibi",
+    "WNW": "Magharibi Kaskazini Magharibi",
+    "NW": "Kaskazini Magharibi",
+    "NNW": "Kaskazini Kaskazini Magharibi"
+  },
+  "Rain": "Mvua",
+  "Drizzle": "Manyunyu",
+  "Snow": "Theluji",
+  "Clouds": "Mawingu",
+  "Clear": "Wazi",
+  "light rain": "mvua kiasi"
+}

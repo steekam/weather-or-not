@@ -22,6 +22,8 @@ To run the project locally:
 - [OpenWeatherMap API](https://openweathermap.org/): Provides weather data used in the application.
 - [Lightning CSS](https://lightningcss.dev/) Tool: Used for minification and optimization of CSS files.
 - [TanStack query](https://tanstack.com/query/latest/docs/framework/react/overview) - Data fetching library with caching capabilities
+- [Radix UI Colors](https://www.radix-ui.com/colors) : Generate the app's color scheme.
+- [Radix UI Primitives](https://www.radix-ui.com/primitives/docs/overview/introduction) : Accessible primitives for interactive components
 
 ## Contributors
 - [Kamau Wanyee](https://github.com/steekam)

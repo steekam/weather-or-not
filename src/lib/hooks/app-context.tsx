@@ -1,4 +1,5 @@
-import {createContext, ReactNode, useState} from "react";
+import {createContext, ReactNode, useEffect, useState} from "react";
+import {changeLanguage} from "i18next";
 
 export const AppLangCodes = ["en", "sw"] as const;
 export type AppLangCode = (typeof AppLangCodes)[number]
@@ -25,6 +26,10 @@ export function AppContextProvider({children}: { children: ReactNode }) {
         }
         setLocale(newLocale as AppLangCode);
     }
+
+    useEffect(() => {
+        void changeLanguage(locale);
+    }, [locale])
 
     return <AppContext.Provider value={{
         locale,

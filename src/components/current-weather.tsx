@@ -1,6 +1,7 @@
 import {OneCallResponseSchema} from "~/lib/api/schemas";
 import React from "react";
 import {formatDate, formatISO, fromUnixTime} from "date-fns";
+import {useTranslation} from "react-i18next";
 
 export interface CurrentWeatherProps {
     dataIsLoading: boolean;
@@ -8,6 +9,7 @@ export interface CurrentWeatherProps {
 }
 
 export default function CurrentWeather({dataIsLoading, data}: CurrentWeatherProps) {
+    const {t} = useTranslation();
 
     if (dataIsLoading || !data) {
         return (<div className={"skeleton"}>
@@ -25,7 +27,7 @@ export default function CurrentWeather({dataIsLoading, data}: CurrentWeatherProp
         <p className={"temperature"}>{~~data.current.temp}<sup>&deg;C</sup></p>
 
         <p className={"description"}>
-            {data.current.weather[0].description}
+            {t(data.current.weather[0].description)}
             <span className={"temps"}>
                 {~~data.daily[0].temp.max}<sup>&deg;C</sup> / {~~data.daily[0].temp.min}<sup>&deg;C</sup>
             </span>
@@ -33,7 +35,7 @@ export default function CurrentWeather({dataIsLoading, data}: CurrentWeatherProp
 
         <div className={"last-updated-at"}>
             <p>
-                Last updated:
+                {t('Last updated')}:
                 <time dateTime={formatISO(fromUnixTime(data.current.dt))}>
                     {formatDate(fromUnixTime(data.current.dt), "do MMM, yyyy HH:mm")}
                 </time>

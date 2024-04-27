@@ -1,0 +1,17 @@
+{
+  "Switch Language": "Switch Language",
+  "day-summary": {
+    "title": "The Day's Vibe"
+  },
+  "date-time": "{{value, datetime}}",
+  "week-forecast": {
+    "title": "7 day forecast"
+  },
+  "highlights": {
+    "title": "Highlight reel"
+  },
+  "error": {
+    "title": "Something went wrong 😕",
+    "generic": "We cannot handle your request right now. There seems to be an issue with our service. Check in again later."
+  }
+}

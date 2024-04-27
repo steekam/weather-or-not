@@ -2,6 +2,7 @@ import {OneCallResponseSchema} from "~/lib/api/schemas";
 import React from "react";
 import {ScrollArea, ScrollBar} from "~/components/scroll-area";
 import {formatDate, formatISO, fromUnixTime} from "date-fns";
+import {useTranslation} from "react-i18next";
 
 export interface WeekForecastProps {
     isDataLoading: boolean;
@@ -9,9 +10,9 @@ export interface WeekForecastProps {
 }
 
 export default function WeekForecast({isDataLoading, data }: WeekForecastProps) {
-
+    const {t} = useTranslation();
     return <section className={"section week-forecast"}>
-        <h2 className={"title"}>7 day forecast</h2>
+        <h2 className={"title"}>{t('week-forecast.title')}</h2>
 
         {
             (isDataLoading || !data) ?
@@ -38,7 +39,7 @@ export default function WeekForecast({isDataLoading, data }: WeekForecastProps) 
                                                     src={`https://openweathermap.org/img/wn/${day.weather[0].icon}.png`}
                                                     alt={`Weather icon for ${day.weather[0].icon}`}/>
                                             </div>
-                                            <p className={"weather"}>{day.weather[0].main}</p>
+                                            <p className={"weather"}>{t(day.weather[0].main)}</p>
                                             <p className={"temps"}>
                                                 {~~day.temp.max}<sup>&deg;</sup>{" "}/{" "}
                                                 <span
