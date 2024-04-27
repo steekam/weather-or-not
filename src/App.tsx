@@ -1,4 +1,4 @@
-import React, {useContext, useMemo} from 'react';
+import React, {useContext, useEffect, useMemo} from 'react';
 import {getWeatherInfo} from "./lib/api";
 import {useQuery} from "@tanstack/react-query";
 import {formatDate, formatISO, fromUnixTime} from "date-fns";
@@ -19,7 +19,7 @@ function App() {
     const latitude = -1.286389;
     const longitude = 36.817223;
 
-    const {isLoading, data} = useQuery({
+    const {data, isLoading, error} = useQuery({
         queryKey: ["weather", {latitude, longitude}] as const,
         queryFn: async ({queryKey}) => {
             const {latitude, longitude} = queryKey[1];
@@ -29,10 +29,11 @@ function App() {
         enabled: Boolean(!waitingForLocation && (latitude && longitude)),
         staleTime: 30 * 60 * 1000,
         refetchOnWindowFocus: false,
+        retry: false,
     });
 
-    if (data) {
-        console.log(data);
+    if (error) {
+        console.error(error);
     }
 
     const currentDerived = useMemo(() => {
@@ -52,6 +53,24 @@ function App() {
 
     return (
         <main className={"wrapper"}>
+            {
+                error && (
+                    <div className="error-alert">
+                        <h2 className={"heading"}>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
+                                 stroke="currentColor" className="w-6 h-6">
+                                <path strokeLinecap="round" strokeLinejoin="round"
+                                      d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z"/>
+                            </svg>
+
+                            Something went wrong 😕
+                        </h2>
+                        <p>We cannot handle your request right now. There seems to be an issue with our service. Check in again later.
+                        </p>
+                    </div>
+                )
+            }
+
             <div className={"container"}>
                 <section className={"current-section"}>
                     <div>
@@ -82,7 +101,7 @@ function App() {
                     </div>
 
                     {
-                        isLoading ? (
+                        (isLoading || !data) ? (
                             <div className={"skeleton"}>
                                 <div></div>
                                 <div></div>
@@ -99,17 +118,18 @@ function App() {
                                     <p className={"description"}>
                                         {data.current.weather[0].description}
                                         <span className={"temps"}>
-                                            {~~currentDerived?.max}<sup>&deg;C</sup> / {~~currentDerived?.min}<sup>&deg;C</sup>
-                                        </span>
+                                                {~~currentDerived!.max}<sup>&deg;C</sup> / {~~currentDerived!.min}<sup>&deg;C</sup>
+                                            </span>
                                     </p>
-                                </div>
-                                <div className={"last-updated-at"}>
-                                    <p>
-                                        Last updated:
-                                        <time dateTime={formatISO(fromUnixTime(data.current.dt))}>
-                                            {formatDate(fromUnixTime(data.current.dt), "do MMM, yyyy HH:mm")}
-                                        </time>
-                                    </p>
+
+                                    <div className={"last-updated-at"}>
+                                        <p>
+                                            Last updated:
+                                            <time dateTime={formatISO(fromUnixTime(data.current.dt))}>
+                                                {formatDate(fromUnixTime(data.current.dt), "do MMM, yyyy HH:mm")}
+                                            </time>
+                                        </p>
+                                    </div>
                                 </div>
                             </>
                         )
@@ -119,10 +139,10 @@ function App() {
                 </section>
 
                 <ScrollArea className={"detailed-section"}>
-                    <ScrollBar orientation="horizontal" />
+                    <ScrollBar orientation="horizontal"/>
 
                     <section className={"day-summary"}>
-                        {isLoading
+                        {(isLoading || !data)
                             ? (<div className={"skeleton"}></div>)
                             : (
                                 <>
@@ -137,7 +157,7 @@ function App() {
                         <h2 className={"title"}>7 day forecast</h2>
 
                         {
-                            isLoading ?
+                            (isLoading || !data) ?
                                 (<div className={"skeleton"}>
                                     <div></div>
                                     <div></div>
@@ -150,7 +170,6 @@ function App() {
                                     <ScrollArea className="days-container-root">
                                         <ul className={"days-container"}>
                                             {
-                                                // @ts-expect-error
                                                 data.daily.slice(1).map((day) => {
                                                     const currentDayDate = fromUnixTime(day.dt);
                                                     return (
@@ -173,7 +192,7 @@ function App() {
                                                 })
                                             }
                                         </ul>
-                                        <ScrollBar orientation="horizontal" />
+                                        <ScrollBar orientation="horizontal"/>
                                     </ScrollArea>
                                 )
                         }
@@ -183,7 +202,7 @@ function App() {
                         <h2 className={"title"}>Highlight Reel</h2>
 
                         {
-                            isLoading ?
+                            (isLoading || !data) ?
                                 (<div className="skeleton">
                                     <div></div>
                                     <div></div>
@@ -207,7 +226,8 @@ function App() {
                                         <div className="card wind-status">
                                             <p className={"card-title"}>Wind Status</p>
                                             <div className="card-content">
-                                                <span className={"metric-value"}>{data.current.wind_speed}</span> <small className={"metric-unit"}>metre/sec</small>
+                                                <span className={"metric-value"}>{data.current.wind_speed}</span> <small
+                                                className={"metric-unit"}>metre/sec</small>
                                             </div>
                                             <div className={"comment"}>
                                                 <div className={"compass-icon"}>
@@ -250,8 +270,9 @@ function App() {
                                         <div className="card">
                                             <p className={"card-title"}>Visibility</p>
                                             <div className={"card-content"}>
-                                                <span className={"metric-value"}>{data.current.visibility / 1000}</span> <small
-                                                className={"metric-unit"}>km</small>
+                                                <span className={"metric-value"}>{data.current.visibility / 1000}</span>
+                                                <small
+                                                    className={"metric-unit"}>km</small>
                                             </div>
                                             <p className={"comment"}>
                                                 {getVisibilityComment(data.current.visibility)}
