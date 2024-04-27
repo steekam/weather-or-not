@@ -1,5 +1,5 @@
 import {axiosInstance} from "./base";
-import {OneCallResponseSchema, WeatherApiError} from "~/lib/api/schemas";
+import {OneCallResponseSchema} from "~/lib/api/schemas";
 
 export const WeatherDataOptions = ["current", "minutely", "hourly", "daily", "alerts"] as const;
 export type WeatherDataOption = (typeof WeatherDataOptions)[number];
@@ -24,7 +24,8 @@ export async function getWeatherInfo(options: GetWeatherInfoOptions) {
     // @ts-expect-error Number types will be coerced to string
     const params = new URLSearchParams(options);
     params.append("units", "metric");
-    return axiosInstance.get<OneCallResponseSchema>(`/data/3.0/onecall?${params.toString()}`);
+    return axiosInstance.get<OneCallResponseSchema>(`/data/3.0/onecall?${params.toString()}`)
+        .then(res => res.data);
 }
 
 export async function geocodeSearchByLocationName(query: string, limit: number = 2) {
@@ -32,7 +33,8 @@ export async function geocodeSearchByLocationName(query: string, limit: number =
         q: query,
         limit: limit.toString(),
     });
-    return axiosInstance.get(`geo/1.0/direct?${params.toString()}`);
+    return axiosInstance.get(`/geo/1.0/direct?${params.toString()}`)
+        .then(res => res.data);
 }
 
 
@@ -42,5 +44,6 @@ export async function reverseGeoCodeSearch({lat, long}: { lat: number, long: num
         long: long.toString(),
         limit: limit.toString(),
     });
-    return axiosInstance.get(`geo/1.0/reverser?${params.toString()}`);
+    return axiosInstance.get(`/geo/1.0/reverser?${params.toString()}`)
+        .then(res => res.data);
 }

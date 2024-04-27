@@ -1,6 +1,4 @@
-import React, {useContext, useEffect, useMemo} from 'react';
-import {getWeatherInfo} from "./lib/api";
-import {useQuery} from "@tanstack/react-query";
+import React, {useContext} from 'react';
 import {formatDate, formatISO, fromUnixTime} from "date-fns";
 import {ScrollArea, ScrollBar} from "~/components/scroll-area";
 import {
@@ -11,6 +9,7 @@ import {
     uviValueComment
 } from "~/lib/utlis";
 import {AppContext} from "~/lib/hooks/app-context";
+import {useOneCallQuery} from "~/lib/api/queries";
 
 
 function App() {
@@ -19,35 +18,15 @@ function App() {
     const latitude = -1.286389;
     const longitude = 36.817223;
 
-    const {data, isLoading, error} = useQuery({
-        queryKey: ["weather", {latitude, longitude}] as const,
-        queryFn: async ({queryKey}) => {
-            const {latitude, longitude} = queryKey[1];
-            const res = await getWeatherInfo({lon: longitude!, lat: latitude!, exclude: ["alerts", "hourly"]});
-            return res.data;
-        },
+    const {data, isLoading, error} = useOneCallQuery({
+        latitude, longitude
+    }, {
         enabled: Boolean(!waitingForLocation && (latitude && longitude)),
-        staleTime: 30 * 60 * 1000,
-        refetchOnWindowFocus: false,
-        retry: false,
-    });
+    })
 
     if (error) {
         console.error(error);
     }
-
-    const currentDerived = useMemo(() => {
-        if (!data) {
-            return null;
-        }
-
-        return {
-            min: data.daily[0].temp.min,
-            max: data.daily[0].temp.max,
-            chanceOfRain: data.daily[0].pop * 100,
-            summary: data.daily[0].summary,
-        };
-    }, [data]);
 
     const today = new Date();
 
@@ -65,7 +44,8 @@ function App() {
 
                             Something went wrong 😕
                         </h2>
-                        <p>We cannot handle your request right now. There seems to be an issue with our service. Check in again later.
+                        <p>We cannot handle your request right now. There seems to be an issue with our service. Check in
+                            again later.
                         </p>
                     </div>
                 )
@@ -118,7 +98,7 @@ function App() {
                                     <p className={"description"}>
                                         {data.current.weather[0].description}
                                         <span className={"temps"}>
-                                                {~~currentDerived!.max}<sup>&deg;C</sup> / {~~currentDerived!.min}<sup>&deg;C</sup>
+                                                {~~data.daily[0].temp.max}<sup>&deg;C</sup> / {~~data.daily[0].temp.min}<sup>&deg;C</sup>
                                             </span>
                                     </p>
 
@@ -147,7 +127,7 @@ function App() {
                             : (
                                 <>
                                     <h2>The Day&apos;s Vibe</h2>
-                                    <p>{currentDerived?.summary}</p>
+                                    <p>{data.daily[0].summary}</p>
                                 </>
                             )
                         }

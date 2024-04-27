@@ -13,6 +13,8 @@ export const uviComments = {
 } as const;
 
 export function uviValueComment(value: number) {
+    value = Math.floor(value);
+
     if (value >= 0 && value <= 2) {
         return uviComments.veryLow;
     } else if (value >= 3 && value <= 5) {
