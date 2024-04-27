@@ -59,13 +59,33 @@ body {
     }
 }
 
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}
+
+#language-switcher {
+    font-size: var(--fs-sm);
+}
+
 main.wrapper {
     padding-block: 1rem;
     padding-inline: 1.25rem 1rem;
-    height: 100%;
+
+    @media (min-width: 640px) {
+        height: 100%;
+    }
 
     div.container {
         display: flex;
+        flex-direction: column;
         height: 100%;
         width: 100%;
         max-width: var(--size-7xl);
@@ -74,14 +94,21 @@ main.wrapper {
         box-shadow: var(--shadow);
         overflow: clip;
 
+        @media (min-width: 640px) {
+            flex-direction: row;
+        }
+
         .current-section {
-            width: 33.33%;
-            max-width: 300px;
             display: flex;
             flex-direction: column;
-            padding-block: 2.75rem 1.75rem;
+            padding-block: 2rem 1.75rem;
             padding-inline: 2.25rem 1.75rem;
             background-color: var(--gray-1);
+
+            @media (min-width: 640px) {
+                width: 33.33%;
+                max-width: 300px;
+            }
 
 
             .skeleton {
@@ -164,9 +191,14 @@ main.wrapper {
                 margin-top: auto;
                 font-size: var(--fs-sm);
                 color: var(--gray-11);
+                display: none;
 
                 time {
                     margin-left: .25rem;
+                }
+
+                @media (min-width: 640px) {
+                    display: revert;
                 }
             }
         }
@@ -179,7 +211,6 @@ main.wrapper {
             width: 100%;
 
             .day-summary {
-                margin-top: 1rem;
                 padding: .75rem 1.25rem;
                 width: 100%;
                 max-width: var(--size-2xl);
@@ -339,6 +370,7 @@ main.wrapper {
 
                         &.sunrise-sunset .card-content {
                             padding-top: .75rem;
+
                             & > * {
                                 display: flex;
 

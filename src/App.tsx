@@ -1,4 +1,4 @@
-import React, {useMemo} from 'react';
+import React, {useContext, useMemo} from 'react';
 import {getWeatherInfo} from "./lib/api";
 import {useQuery} from "@tanstack/react-query";
 import {formatDate, formatISO, fromUnixTime} from "date-fns";
@@ -10,9 +10,11 @@ import {
     getVisibilityComment,
     uviValueComment
 } from "~/lib/utlis";
+import {AppContext} from "~/lib/hooks/app-context";
 
 
 function App() {
+    const {locale, updateLocale} = useContext(AppContext);
     const waitingForLocation = false;
     const latitude = -1.286389;
     const longitude = 36.817223;
@@ -53,6 +55,13 @@ function App() {
             <div className={"container"}>
                 <section className={"current-section"}>
                     <div>
+                        <div style={{position: "relative"}}>
+                            <label className="sr-only" htmlFor="language-swithcer">Switch language</label>
+                            <select id="language-switcher" value={locale} onChange={e => updateLocale(e.target.value)}>
+                                <option value="en">English</option>
+                                <option value="sw">Swahili</option>
+                            </select>
+                        </div>
                         <small>
                             <time dateTime={formatISO(today)} className={"current-weather-date"}>
                                 {formatDate(today, "EEEE, do MMMM yyy")}
@@ -111,9 +120,6 @@ function App() {
 
                 <ScrollArea className={"detailed-section"}>
                     <ScrollBar orientation="horizontal" />
-                    <div>
-                        Language Switcher: English
-                    </div>
 
                     <section className={"day-summary"}>
                         {isLoading
