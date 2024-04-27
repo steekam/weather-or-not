@@ -13,7 +13,7 @@ export function useOneCallQuery(params: OneCallQueryParams, queryOptions?: {enab
             const {latitude, longitude} = queryKey[1] as OneCallQueryParams;
             return getWeatherInfo({lon: longitude!, lat: latitude!, exclude: ["alerts", "hourly"]});
         },
-        staleTime: 30 * 60 * 1000,
+        staleTime: 5 * 60 * 1000, // 5 minutes
         refetchOnWindowFocus: false,
         retry: false,
         ...queryOptions,
