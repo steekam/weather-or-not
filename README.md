@@ -41,6 +41,7 @@ To run the project locally:
 
 > I made tradeoffs based on time constraint
 
+- Allow user to choose their current location using the browser navigation API
 - The app has dark/light mode support but it is not user configurable
 - Add visual charts for hourly weather results
 - Allow adding favourite cities from user. Values can be saved in local storage.
