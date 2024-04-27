@@ -4,7 +4,7 @@ import {
     getHumidityComment,
     getVisibilityComment,
     uviValueComment
-} from "~/lib/utlis";
+} from "~/lib/utils";
 import {formatDate, fromUnixTime} from "date-fns";
 import React from "react";
 import {OneCallResponseSchema} from "~/lib/api/schemas";

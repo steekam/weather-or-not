@@ -6,7 +6,7 @@ import {useOneCallQuery} from "~/lib/api/queries";
 import CurrentWeather from "~/components/current-weather";
 import WeekForecast from "~/components/week-forecast";
 import WeatherHighlights from "~/components/weather-highlights";
-import {Trans, useTranslation} from "react-i18next";
+import {useTranslation} from "react-i18next";
 
 
 function App() {
@@ -86,7 +86,7 @@ function App() {
 
                     <section className={"day-summary"}>
                         {(isLoading || !data)
-                            ? (<div className={"skeleton"}></div>)
+                            ? (<div data-testid={"day-summary-skeleton"} className={"skeleton"}></div>)
                             : (
                                 <>
                                     <h2>{t('day-summary.title')}</h2>
