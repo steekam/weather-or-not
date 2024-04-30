@@ -1,14 +1,16 @@
 import {
+    dateFromUnixTime,
     degreesToCompassDirection,
     getAirPressureComment,
     getHumidityComment,
     getVisibilityComment,
     uviValueComment
 } from "~/lib/utils";
-import {formatDate, fromUnixTime} from "date-fns";
-import React from "react";
+import React, {useContext} from "react";
 import {OneCallResponseSchema} from "~/lib/api/schemas";
 import {useTranslation} from "react-i18next";
+import {format} from "@formkit/tempo";
+import {AppContext} from "~/lib/hooks/app-context";
 
 export interface WeatherHighlightsProps {
     isDataLoading: boolean;
@@ -17,6 +19,7 @@ export interface WeatherHighlightsProps {
 
 export default function WeatherHighlights({isDataLoading, data}: WeatherHighlightsProps) {
     const {t} = useTranslation();
+    const {locale} = useContext(AppContext);
 
     return <section className="section highlights">
         <h2 className={"title"}>{t('highlights.title')}</h2>
@@ -68,11 +71,11 @@ export default function WeatherHighlights({isDataLoading, data}: WeatherHighligh
                             <div className={"card-content"}>
                                 <div>
                                     <span>🌅</span>
-                                    <span>{formatDate(fromUnixTime(data.current.sunrise), "hh:mm a")}</span>
+                                    <time dateTime={dateFromUnixTime(data.current.sunrise).toISOString()}>{format(dateFromUnixTime(data.current.sunrise), "hh:mm A", locale)}</time>
                                 </div>
                                 <div>
                                     <span>🌇</span>
-                                    <span>{formatDate(fromUnixTime(data.current.sunset), "hh:mm a")}</span>
+                                    <time dateTime={dateFromUnixTime(data.current.sunset).toISOString()}>{format(dateFromUnixTime(data.current.sunset), "hh:mm A", locale)}</time>
                                 </div>
                             </div>
                         </div>

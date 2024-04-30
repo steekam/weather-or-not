@@ -1,7 +1,9 @@
 import {OneCallResponseSchema} from "~/lib/api/schemas";
-import React from "react";
-import {formatDate, formatISO, fromUnixTime} from "date-fns";
+import React, {useContext} from "react";
 import {useTranslation} from "react-i18next";
+import {format} from "@formkit/tempo";
+import {dateFromUnixTime} from "~/lib/utils";
+import {AppContext} from "~/lib/hooks/app-context";
 
 export interface CurrentWeatherProps {
     dataIsLoading: boolean;
@@ -10,6 +12,7 @@ export interface CurrentWeatherProps {
 
 export default function CurrentWeather({dataIsLoading, data}: CurrentWeatherProps) {
     const {t} = useTranslation();
+    const {locale} = useContext(AppContext);
 
     if (dataIsLoading || !data) {
         return (<div className={"skeleton"}>
@@ -18,6 +21,8 @@ export default function CurrentWeather({dataIsLoading, data}: CurrentWeatherProp
             <div></div>
         </div>);
     }
+
+    const currentDate = dateFromUnixTime(data?.current.dt);
 
     return <div className={"weather-info"}>
         <img className={"icon"}
@@ -36,8 +41,8 @@ export default function CurrentWeather({dataIsLoading, data}: CurrentWeatherProp
         <div className={"last-updated-at"}>
             <p>
                 {t('Last updated')}:
-                <time dateTime={formatISO(fromUnixTime(data.current.dt))}>
-                    {formatDate(fromUnixTime(data.current.dt), "do MMM, yyyy HH:mm")}
+                <time dateTime={currentDate.toISOString()}>
+                    {format(currentDate, "DD MMM, YYYY HH:mm", locale)}
                 </time>
             </p>
         </div>

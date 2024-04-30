@@ -1,5 +1,5 @@
 import React, {useContext} from 'react';
-import {formatDate, formatISO} from "date-fns";
+import { format } from "@formkit/tempo"
 import {ScrollArea, ScrollBar} from "~/components/scroll-area";
 import {AppContext} from "~/lib/hooks/app-context";
 import {useOneCallQuery} from "~/lib/api/queries";
@@ -60,8 +60,12 @@ function App() {
                             </select>
                         </div>
                         <small>
-                            <time dateTime={formatISO(today)} className={"current-weather-date"}>
-                                {formatDate(today, "EEEE, do MMMM yyy")}
+                            <time dateTime={today.toISOString()} className={"current-weather-date"}>
+                                {format({
+                                    date: today,
+                                    format: "dddd, DD MMMM YYYY",
+                                    locale
+                                })}
                             </time>
                         </small>
                         <h2 className={"location-title"}>

@@ -86,3 +86,7 @@ export function getAirPressureComment(airPressure: number) {
         return i18n.t("highlights.comments.pressure.veryHigh", {defaultValue: airPressureComments.veryHigh});
     }
 }
+
+export function dateFromUnixTime(timestamp: number) {
+    return new Date(timestamp * 1000);
+}
