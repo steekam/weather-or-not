@@ -1,9 +1,10 @@
 import i18n from "i18next";
 
+const directions = ['North', 'NNE', 'NE', 'ENE', 'East', 'ESE', 'SE', 'SSE', 'South', 'SSW', 'SW', 'WSW', 'West', 'WNW', 'NW', 'NNW'] as const;
 export function degreesToCompassDirection(degrees: number) {
-    const directions = ['North', 'NNE', 'NE', 'ENE', 'East', 'ESE', 'SE', 'SSE', 'South', 'SSW', 'SW', 'WSW', 'West', 'WNW', 'NW', 'NNW'] as const;
     const index = Math.round((degrees / 22.5) % 16);
-    return i18n.t(`compass.${directions[(index + 16) % 16]}`);
+    const value = directions[(index + 16) % 16];
+    return i18n.t(`compass.${value}`, {defaultValue: value});
 }
 
 export const uviComments = {
